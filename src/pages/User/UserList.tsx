@@ -11,11 +11,11 @@ import { UserModel } from "../../Model/User";
 
 
 
-type Props = {handleFriendList: (user:UserModel[]) => void}
+type Props = {handleFriendList: (user:UserModel[]) => void;currentUser:UserModel | undefined}
 
 const UserList = (props: Props) => {
 
-    const {handleFriendList}=props
+    const {handleFriendList,currentUser}=props
     const [users, setUsers] = useState<UserModel[]>([]);
     const [friendList,setFriendList]=useState<UserModel[]>([]);
     
@@ -50,7 +50,7 @@ const UserList = (props: Props) => {
         <div className="row">
           {users.map(user => (
             <div key={user.id} className="col-lg-3 col-md-6 col-12 mb-5">
-              <UserCard user={user} onAddFriend={handleAddFriend} />
+              <UserCard user={user} currentUser={currentUser}onAddFriend={handleAddFriend} />
             </div>
           ))}
         </div>

@@ -8,10 +8,11 @@ type Props = {
   user: UserModel;
   onAddFriend?: (user:UserModel) => void; 
   isFriend?: boolean;
+  currentUser?:UserModel
 };
 
 const UserCard = (props: Props) => {
-  const { user, onAddFriend, isFriend } = props;
+  const { user, onAddFriend, isFriend,currentUser } = props;
   const addFriend = ( )=>{
 
     if(onAddFriend)
@@ -25,7 +26,7 @@ const UserCard = (props: Props) => {
       <div className="card-body">
         <h5 className="card-title">{user.firstName}</h5>
         <p className="card-text">{user.email}</p>
-        {!isFriend && <button className="btn btn-primary" onClick={addFriend }>
+        {currentUser && !isFriend && <button className="btn btn-primary" onClick={addFriend }>
           Add Friend
         </button>
 }

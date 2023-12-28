@@ -20,6 +20,7 @@ function App({}: Props) {
 
   const onLogout = () => {
     localStorage.removeItem("user");
+    setUser(undefined);
 	console.log(localStorage.getItem("user"))
   };
 
@@ -41,7 +42,7 @@ function App({}: Props) {
       <BrowserRouter>
         <Navbar1 loggedUser={user} onLogout={onLogout} />
         <Routes>
-          <Route path="/" element={<Homepage handleFriendList={handleFriendList} />} />
+          <Route path="/" element={<Homepage handleFriendList={handleFriendList} user={user} />} />
 		      <Route path="/friend-list" element={< FriendList/>} />
           <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
           <Route path="*" element={<p>Not Found</p>} />
