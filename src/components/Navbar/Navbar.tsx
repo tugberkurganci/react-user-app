@@ -2,15 +2,26 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Button, NavDropdown, Container } from "react-bootstrap";
 import UserCard from "../UserCard";
+import { UserModel } from "../../Model/User";
 
-const MyNavbar = ({ onLogout, loggedUser }) => {
-  const [user, setUser] = useState();
+
+
+type Props = { onLogout: () => void; loggedUser?:UserModel }
+
+const Navbar1 = ({onLogout,loggedUser}: Props) => {
+  const [user, setUser] = useState<UserModel>();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    
+    const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(storedUser);
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+      } catch (error) {
+        console.error("Error parsing user from localStorage:", error);
+      }
     }
 
     if (loggedUser && loggedUser !== user) {
@@ -24,14 +35,15 @@ const MyNavbar = ({ onLogout, loggedUser }) => {
 
   const handleLogout = () => {
     onLogout();
-    setUser(null);
+    setUser(undefined);
   };
 
   const toFriendList =()=>  {
 	navigate("/friend-list", {
-		state: { myData: user.friendList },
+		state: { myData: user?.friendList },
 	  })
   }
+
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -84,7 +96,7 @@ const MyNavbar = ({ onLogout, loggedUser }) => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  );
-};
+  )
+}
 
-export default MyNavbar;
+export default Navbar1

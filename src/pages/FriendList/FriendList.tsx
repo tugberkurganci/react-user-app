@@ -1,12 +1,17 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom';
 import UserCard from '../../components/UserCard';
+import { UserModel } from '../../Model/User';
 
 
-function FriendList() {
-    const location = useLocation();
-    const myData = location.state?.myData || null;
+
+
+type Props = {}
+
+function FriendList({}: Props) {
   
+  const location = useLocation();
+    const myData:UserModel[]  = location.state?.myData || null;
   return (
     <div className="container mt-5">
     <div className="row">
