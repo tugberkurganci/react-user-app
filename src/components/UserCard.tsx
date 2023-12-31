@@ -18,7 +18,7 @@ const UserCard = (props: Props) => {
   const authState=useSelector((store:RootState) => store.auth);
   const dispatch=useDispatch();
   const showAddFriendButton = authState.id !== 0 && !isFriend && 
-                              !authState.friendList.find((friend) => friend.id === user.id);
+    !authState.friendList.find((friend) => friend.id === user.id);
   
   const addFriendtoFriendList = (user:UserModel )=>{
 

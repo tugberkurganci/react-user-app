@@ -23,6 +23,7 @@ const Navbar1 = (props: Props) => {
 
   const handleLogout = () => {
     dispatch(logoutSuccess())
+    navigate("/");
     
   };
 
