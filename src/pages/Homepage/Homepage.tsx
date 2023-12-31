@@ -5,14 +5,14 @@ import { UserModel } from "../../Model/User";
 
 
 
-type Props = {handleFriendList: (user:UserModel[]) => void;user:UserModel| undefined}
+type Props = {}
 
 const Homepage = (props: Props) => {
-	const { handleFriendList ,user} = props;
+	
   return (
 	<div className="container mt-5">
 			<div className="row">
-				<UserList handleFriendList={handleFriendList} currentUser={user}/>
+				<UserList  />
 			</div>
 		</div>
   )

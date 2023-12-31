@@ -11,11 +11,11 @@ import { UserModel } from "../../Model/User";
 
 
 
-type Props = {handleFriendList: (user:UserModel[]) => void;currentUser:UserModel | undefined}
+type Props = {}
 
 const UserList = (props: Props) => {
 
-    const {handleFriendList,currentUser}=props
+    
     const [users, setUsers] = useState<UserModel[]>([]);
     const [friendList,setFriendList]=useState<UserModel[]>([]);
     
@@ -32,17 +32,6 @@ const UserList = (props: Props) => {
       
     };
   
-    const handleAddFriend = (user:UserModel) => {
-  
-      setFriendList(friendList?[...friendList,user]:[user])
-      
-  
-    };
-  
-    useEffect(() => {
-      console.log(friendList)
-      handleFriendList(friendList);
-    }, [friendList])
     
   
     return (
@@ -50,7 +39,7 @@ const UserList = (props: Props) => {
         <div className="row">
           {users.map(user => (
             <div key={user.id} className="col-lg-3 col-md-6 col-12 mb-5">
-              <UserCard user={user} currentUser={currentUser}onAddFriend={handleAddFriend} />
+              <UserCard user={user} />
             </div>
           ))}
         </div>

@@ -12,39 +12,17 @@ import Navbar1 from "./components/Navbar/Navbar";
 type Props = {}
 
 function App({}: Props) {
-  const [user, setUser] = useState<UserModel>();
 
-  const handleLogin = (user:UserModel) => {
-    setUser(user);
-  };
-
-  const onLogout = () => {
-    localStorage.removeItem("user");
-    setUser(undefined);
-	console.log(localStorage.getItem("user"))
-  };
-
-  const handleFriendList = (list:UserModel[]) => {
-	console.log(list)
-	console.log(user)
-	
-	if (!user) {
-	  return;
-	}
-	
-	
-	  setUser((prev) => prev? { ...prev, friendList: list }:user);
-	
-	console.log(user)
-  };
+  
+  
   return ( 
     <>
       <BrowserRouter>
-        <Navbar1 loggedUser={user} onLogout={onLogout} />
+        <Navbar1 />
         <Routes>
-          <Route path="/" element={<Homepage handleFriendList={handleFriendList} user={user} />} />
+          <Route path="/" element={<Homepage />} />
 		      <Route path="/friend-list" element={< FriendList/>} />
-          <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<p>Not Found</p>} />
         </Routes>
       </BrowserRouter>

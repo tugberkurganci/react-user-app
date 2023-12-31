@@ -1,46 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Button, NavDropdown, Container } from "react-bootstrap";
-import UserCard from "../UserCard";
-import { UserModel } from "../../Model/User";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../Model/RootState";
+import { logoutSuccess } from "../../state/redux";
 
 
 
-type Props = { onLogout: () => void; loggedUser?:UserModel }
+type Props = {  }
 
-const Navbar1 = ({onLogout,loggedUser}: Props) => {
-  const [user, setUser] = useState<UserModel>();
+const Navbar1 = (props: Props) => {
+  
   const navigate = useNavigate();
+  const authState=useSelector((store:RootState) => store.auth);
+  const dispatch=useDispatch();
 
-  useEffect(() => {
-    
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      try {
-        const parsedUser = JSON.parse(storedUser);
-        setUser(parsedUser);
-      } catch (error) {
-        console.error("Error parsing user from localStorage:", error);
-      }
-    }
 
-    if (loggedUser && loggedUser !== user) {
-      setUser(loggedUser);
-    }
-  }, [loggedUser]);
 
   const handleLogin = () => {
     navigate("/login");
   };
 
   const handleLogout = () => {
-    onLogout();
-    setUser(undefined);
+    dispatch(logoutSuccess())
+    
   };
 
   const toFriendList =()=>  {
+
+    console.log(authState)
 	navigate("/friend-list", {
-		state: { myData: user?.friendList },
+		state: { myData: authState?.friendList },
 	  })
   }
 
@@ -59,13 +49,13 @@ const Navbar1 = ({onLogout,loggedUser}: Props) => {
             </Nav.Link>
           </Nav>
           <Nav>
-            {user ? (
+            {authState.id!==0 ? (
               <NavDropdown
                 title={
                   <div className="d-flex align-items-center">
-                    <span className="ms-2">{user.firstName}</span>
+                    <span className="ms-2">{authState.firstName}</span>
                     <img
-                      src={user.image}
+                      src={authState.image}
                       style={{
                         width: "60px",
                         height: "60px",
@@ -79,11 +69,11 @@ const Navbar1 = ({onLogout,loggedUser}: Props) => {
                 id="userDropdown"
               >
                 <NavDropdown.Item
-                  onClick={toFriendList}
+                  onClick={()=>toFriendList()}
                 >
-                arkadaş listesi size: { `${user.friendList?.length}`} 
+                arkadaş listesi size: { `${authState.friendList?.length}`} 
                 </NavDropdown.Item>
-                <NavDropdown.Item onClick={handleLogout}>
+                <NavDropdown.Item onClick={()=>handleLogout()}>
                   Çıkış Yap
                 </NavDropdown.Item>
               </NavDropdown>
